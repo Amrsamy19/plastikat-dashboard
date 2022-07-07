@@ -1,8 +1,8 @@
 const arabicTranslation = {
-	Navbar: {
-		About: "من نحن",
-		Partners: "شركاء",
-		Contact: "اتصل بنا",
+	Login: {
+		Email: "البريد الالكتروني",
+		Password: "كلمة السر",
+		Login: "تسجيل الدخول",
 	},
 };
 

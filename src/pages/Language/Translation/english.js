@@ -1,8 +1,8 @@
 const englishTranslation = {
-	Navbar: {
-		About: "About",
-		Partners: "Partners",
-		Contact: "Contact",
+	Login: {
+		Email: "Email",
+		Password: "Password",
+		Login: "Login",
 	},
 };
 

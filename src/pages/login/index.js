@@ -1,12 +1,23 @@
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+
 const LoginForm = () => {
+	const { i18n } = useTranslation();
+	const [checked, setChecked] = useState(false);
+
+	const handleChange = () => {
+		setChecked(!checked);
+		i18n.changeLanguage(!checked ? "en" : "ar");
+	};
+
 	return (
 		<div className="p-20 flex flex-col items-center rounded-lg shadow-gray-900">
 			<div className="w-fit space-y-8">
 				<h1 className="mt-6 text-center text-5xl font-Comfortaa font-normal text-green-600">
-					Plastikat Board
+					Plastikat
 				</h1>
 			</div>
-			<form className="mt-8 space-y-6">
+			<form action="/" className="mt-8 space-y-6">
 				<div className="relative z-0 w-full group">
 					<input
 						type="email"
@@ -19,7 +30,7 @@ const LoginForm = () => {
 						htmlFor="email"
 						className="peer-focus:font-medium absolute font-Comfortaa text-lg text-gray-700 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-green-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
 					>
-						Email
+						{i18n.t("Login.Email")}
 					</label>
 				</div>
 				<div className="relative z-0 w-full group">
@@ -35,8 +46,25 @@ const LoginForm = () => {
 						htmlFor="password"
 						className="peer-focus:font-medium font-Comfortaa absolute text-lg text-gray-700 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-green-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
 					>
-						Password
+						{i18n.t("Login.Password")}
 					</label>
+				</div>
+				<div className="relative z-0 w-full group">
+					<div className="flex justify-center items-center">
+						<label forhtml="check" className="cursor-pointer">
+							<input
+								type="checkbox"
+								id="check"
+								onClick={() => {
+									handleChange();
+								}}
+								className="sr-only peer"
+							/>
+							<p className="font-Comfortaa font-medium text-md transition-all duration-500">
+								{checked ? "English" : "العربية"}
+							</p>
+						</label>
+					</div>
 				</div>
 				<div className="relative z-0 w-full group">
 					<button
@@ -47,7 +75,7 @@ const LoginForm = () => {
 							focus:outline-none focus:ring-2 focus:ring-offset-2
 							focus:ring-green-500"
 					>
-						Login
+						{i18n.t("Login.Login")}
 					</button>
 				</div>
 			</form>
