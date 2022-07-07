@@ -1,11 +1,66 @@
-import { Navbar } from "../../Navbar";
+import { Link } from "react-router-dom";
+import { Navbar } from "../../../components/Navbar";
 
-const offers = [
-	{ Id: 1, type: "DASANI", date: "2020-01-01", status: "Pending" },
-	{ Id: 2, type: "DASANI", date: "2020-01-01", status: "Pending" },
-	{ Id: 3, type: "DASANI", date: "2020-01-01", status: "Pending" },
-	{ Id: 4, type: "DASANI", date: "2020-01-01", status: "Pending" },
-	{ Id: 5, type: "DASANI", date: "2020-01-01", status: "Pending" },
+export const offers = [
+	{
+		id: 1,
+		itemName: "DASANI",
+		itemType: "SMALL_BOTTLE",
+		quantity: 15,
+		date: "2020-01-01",
+		district: "Giza",
+		clientName: "خلود العلايمي - Khalod Alalaaiamai",
+		clientGender: "Female",
+		status: "Pending",
+	},
+	{
+		id: 2,
+		itemName: "DASANI",
+		itemType: "SMALL_BOTTLE",
+		date: "2020-01-01",
+		district: "Giza",
+		clientName: "خلود العلايمي - Khalod Alalaaiamai",
+		clientGender: "Female",
+		status: "Pending",
+	},
+	{
+		id: 3,
+		itemName: "DASANI",
+		itemType: "SMALL_BOTTLE",
+		date: "2020-01-01",
+		district: "Giza",
+		clientName: "خلود العلايمي - Khalod Alalaaiamai",
+		clientGender: "Female",
+		status: "Pending",
+	},
+	{
+		id: 4,
+		itemName: "DASANI",
+		itemType: "SMALL_BOTTLE",
+		date: "2020-01-01",
+		district: "Giza",
+		clientName: "خلود العلايمي - Khalod Alalaaiamai",
+		clientGender: "Female",
+		status: "Pending",
+	},
+	{
+		id: 5,
+		itemName: "DASANI",
+		itemType: "SMALL_BOTTLE",
+		date: "2020-01-01",
+		district: "Giza",
+		clientName: "خلود العلايمي - Khalod Alalaaiamai",
+		clientGender: "Female",
+		status: "Pending",
+	},
+];
+
+const COLUMNS = [
+	{ Header: "id" },
+	{ Header: "Item Name" },
+	{ Header: "Item Type" },
+	{ Header: "Client Name" },
+	{ Header: "Status" },
 ];
 
 export const Home = () => {
@@ -21,18 +76,13 @@ export const Home = () => {
 						<table className="w-full text-md text-left">
 							<thead className="text-lg uppercase border-b-2 border-green-800">
 								<tr>
-									<th scope="col" className="px-6 py-3">
-										ID
-									</th>
-									<th scope="col" className="px-6 py-3">
-										Type
-									</th>
-									<th scope="col" className="px-6 py-3">
-										Date
-									</th>
-									<th scope="col" className="px-6 py-3">
-										Status
-									</th>
+									{COLUMNS.map((column) => {
+										return (
+											<th scope="col" className="px-6 py-3">
+												{column.Header}
+											</th>
+										);
+									})}
 									<th scope="col" className="px-6 py-3">
 										<span className="sr-only">Edit</span>
 									</th>
@@ -45,18 +95,18 @@ export const Home = () => {
 											scope="row"
 											className="px-6 py-4 font-medium whitespace-nowrap"
 										>
-											{offer.Id}
+											{offer.id}
 										</th>
-										<td className="px-6 py-4">{offer.type}</td>
-										<td className="px-6 py-4">{offer.date}</td>
+										<td className="px-6 py-4">{offer.itemName}</td>
+										<td className="px-6 py-4">{offer.itemType}</td>
+										<td className="px-6 py-4">{offer.clientName}</td>
 										<td className="px-6 py-4">{offer.status}</td>
 										<td className="px-6 py-4">
-											<button className="m-2 bg-green-600 hover:bg-green-800 transition-all duration-300 text-white font-bold py-2 px-4 rounded-lg">
-												Accept
-											</button>
-											<button className="bg-red-600 hover:bg-red-800 transition-all duration-300 text-white font-bold py-2 px-4 rounded-lg">
-												Reject
-											</button>
+											<Link to={`/offer/${offer.id}`}>
+												<button className="m-2 bg-green-600 hover:bg-green-800 transition-all duration-300 text-white font-bold py-2 px-4 rounded-lg">
+													Show Offer
+												</button>
+											</Link>
 										</td>
 									</tr>
 								))}

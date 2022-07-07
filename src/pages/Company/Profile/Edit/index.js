@@ -1,4 +1,5 @@
-import { Navbar } from "../../../Navbar";
+import { Navbar } from "../../../../components/Navbar";
+import { Link } from "react-router-dom";
 
 export const Edit = () => {
 	return (
@@ -65,10 +66,19 @@ export const Edit = () => {
 							Number of delegates: <strong>18</strong>
 						</p>
 					</div>
-					<div className="text-xl">
-						<button className="bg-green-600 hover:bg-green-800 transition-all duration-300 text-white font-bold py-2 px-4 rounded-lg">
-							Save
-						</button>
+					<div className="flex items-center justify-around">
+						<div className="text-xl">
+							<button className="bg-green-600 hover:bg-green-800 transition-all duration-300 text-white font-bold py-2 px-4 rounded-lg">
+								Save
+							</button>
+						</div>
+						<div className="text-xl">
+							<Link to="/profile">
+								<button className="bg-red-600 hover:bg-red-800 transition-all duration-300 text-white font-bold py-2 px-4 rounded-lg">
+									Cancel
+								</button>
+							</Link>
+						</div>
 					</div>
 				</div>
 			</main>

@@ -8,6 +8,7 @@ const LoginForm = () => {
 	const handleChange = () => {
 		setChecked(!checked);
 		i18n.changeLanguage(!checked ? "en" : "ar");
+		localStorage.setItem("language", i18n.language);
 	};
 
 	return (
