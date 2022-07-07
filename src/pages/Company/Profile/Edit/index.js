@@ -1,6 +1,6 @@
-import Navbar from "../../../Navbar";
+import { Navbar } from "../../../Navbar";
 
-const Edit = () => {
+export const Edit = () => {
 	return (
 		<form className="font-Comfortaa w-screen flex">
 			<Navbar />
@@ -75,5 +75,3 @@ const Edit = () => {
 		</form>
 	);
 };
-
-export default Edit;

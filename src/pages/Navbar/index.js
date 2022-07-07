@@ -10,7 +10,7 @@ const navLinks = [
 	{ link: "/login", label: "Logout", icon: logoutIcon },
 ];
 
-const Navbar = () => {
+export const Navbar = () => {
 	return (
 		<aside className="font-Comfortaa h-screen w-64" aria-label="Sidebar">
 			<div className="flex flex-col justify-evenly py-4 px-3 bg-green-600 h-full">
@@ -21,7 +21,7 @@ const Navbar = () => {
 				</div>
 				<ul className="space-y-8">
 					{navLinks.map((link) => (
-						<li>
+						<li key={link.label}>
 							<a
 								href={link.link}
 								className="flex items-center p-2 text-lg font-normal text-white rounded-lg hover:bg-green-900 transition-all duration-300"
@@ -38,5 +38,3 @@ const Navbar = () => {
 		</aside>
 	);
 };
-
-export default Navbar;

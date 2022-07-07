@@ -1,4 +1,4 @@
-import Navbar from "../../Navbar";
+import { Navbar } from "../../Navbar";
 
 const offers = [
 	{ Id: 1, type: "DASANI", date: "2020-01-01", status: "Pending" },
@@ -8,7 +8,7 @@ const offers = [
 	{ Id: 5, type: "DASANI", date: "2020-01-01", status: "Pending" },
 ];
 
-const Home = () => {
+export const Home = () => {
 	return (
 		<section className="font-Comfortaa flex">
 			<Navbar />
@@ -54,7 +54,7 @@ const Home = () => {
 											<button className="m-2 bg-green-600 hover:bg-green-800 transition-all duration-300 text-white font-bold py-2 px-4 rounded-lg">
 												Accept
 											</button>
-											<button className="bg-red-600 hover:bg-green-800 transition-all duration-300 text-white font-bold py-2 px-4 rounded-lg">
+											<button className="bg-red-600 hover:bg-red-800 transition-all duration-300 text-white font-bold py-2 px-4 rounded-lg">
 												Reject
 											</button>
 										</td>
@@ -68,5 +68,3 @@ const Home = () => {
 		</section>
 	);
 };
-
-export default Home;

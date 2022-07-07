@@ -83,7 +83,7 @@ const LoginForm = () => {
 	);
 };
 
-const LoginCard = () => {
+export const Login = () => {
 	return (
 		<div className="w-screen h-screen flex flex-col items-center justify-center">
 			<div className="bg-green-600 w-full h-full p-8">
@@ -94,5 +94,3 @@ const LoginCard = () => {
 		</div>
 	);
 };
-
-export default LoginCard;

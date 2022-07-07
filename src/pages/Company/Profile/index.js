@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import Navbar from "../../Navbar";
+import { Navbar } from "../../Navbar";
 
-const Profile = () => {
+export const Profile = () => {
 	return (
 		<section className="font-Comfortaa w-screen flex">
 			<Navbar />
@@ -42,5 +42,3 @@ const Profile = () => {
 		</section>
 	);
 };
-
-export default Profile;

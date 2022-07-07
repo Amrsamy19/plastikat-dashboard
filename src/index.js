@@ -4,11 +4,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import "./index.css";
 import "./pages/Language/i18n";
-import Home from "./pages/Company/Offers";
-import Profile from "./pages/Company/Profile";
-import Delegates from "./pages/Company/Delegates";
-import Edit from "./pages/Company/Profile/Edit";
-import Login from "./pages/Login";
+import { Home } from "./pages/Company/Offers";
+import { Profile } from "./pages/Company/Profile";
+import { Delegates } from "./pages/Company/Delegates";
+import { Edit } from "./pages/Company/Profile/Edit";
+import { Login } from "./pages/Login";
 
 ReactDOM.render(
 	<React.StrictMode>
