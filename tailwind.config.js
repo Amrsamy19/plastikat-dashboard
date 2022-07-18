@@ -3,7 +3,7 @@ module.exports = {
 	theme: {
 		extend: {
 			fontFamily: {
-				Raleway: ["Raleway", "sans-serif"],
+				Noto: ["Noto Naskh Arabic", "serif"],
 				Comfortaa: ["Comfortaa", "cursive"],
 			},
 		},
