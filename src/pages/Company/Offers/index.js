@@ -10,7 +10,13 @@ const COLUMNS = [
 	{ Header: "NumberOfItems" },
 	{ Header: "DelegateName" },
 	{ Header: "ClientName" },
-	{ Header: "Status" },
+];
+
+const STATUS = [
+	"DELEGATE_ASSIGNED",
+	"COMPANY_ASSIGNED",
+	"COMPLETED",
+	"CANCELED",
 ];
 
 export const Home = () => {
@@ -18,6 +24,7 @@ export const Home = () => {
 	const { user, getAccessTokenSilently } = useAuth0();
 	const [company, setCompany] = useState({});
 	const [offers, setOffers] = useState([]);
+	const [filteredOffers, setFilteredOffers] = useState([]);
 
 	const getOffers = async (token, companyID) => {
 		try {
@@ -30,8 +37,8 @@ export const Home = () => {
 					},
 				}
 			);
+			const json = await response.json();
 			if (response.status === 200 || response.status === 304) {
-				const json = await response.json();
 				setOffers(json.data);
 			}
 		} catch (e) {
@@ -63,6 +70,14 @@ export const Home = () => {
 		})();
 	}, [getAccessTokenSilently, user.sub]);
 
+	const handleFilter = (event) => {
+		event.target.value === i18n.t("Company.Home.Headers.Status")
+			? setFilteredOffers(offers)
+			: setFilteredOffers(
+					offers.filter((offer) => offer.status === event.target.value)
+			  );
+	};
+
 	localStorage.setItem("company", JSON.stringify(company));
 
 	return (
@@ -78,7 +93,7 @@ export const Home = () => {
 				</div>
 				<div className="flex items-start justify-center px-12">
 					<div className="w-full shadow-md">
-						<table className="w-full text-md text-left">
+						<table id="offers" className="w-full text-md text-left">
 							<thead className="text-lg border-b-2 border-green-800">
 								<tr>
 									{COLUMNS.map((column) => {
@@ -92,13 +107,31 @@ export const Home = () => {
 											</th>
 										);
 									})}
+									<th scope="col" className="text-center px-6 py-3">
+										<select
+											className="w-fit"
+											onChange={handleFilter}
+											defaultValue={i18n.t("Company.Home.Headers.Status")}
+										>
+											<option value={i18n.t("Company.Home.Headers.Status")}>
+												{i18n.t("Company.Home.Headers.Status")}
+											</option>
+											{STATUS.map((status) => {
+												return (
+													<option key={status} value={status} className="font-Comfortaa">
+														{status}
+													</option>
+												);
+											})}
+										</select>
+									</th>
 									<th scope="col" className="px-6 py-3">
 										<span className="sr-only">Edit</span>
 									</th>
 								</tr>
 							</thead>
 							<tbody className="font-Comfortaa" key="tbody">
-								{offers.map((offer) => (
+								{filteredOffers.map((offer) => (
 									<tr key={offer._id} className="border-b">
 										<th
 											scope="row"

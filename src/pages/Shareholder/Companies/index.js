@@ -19,13 +19,16 @@ export const Home = () => {
 	const handleSubmit = async (companyID) => {
 		try {
 			const token = await getAccessTokenSilently();
-			const response = await fetch(`http://164.92.248.132/api/companies/${companyID}`, {
-				method: "DELETE",
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			});
-			
+			const response = await fetch(
+				`http://164.92.248.132/api/companies/${companyID}`,
+				{
+					method: "DELETE",
+					headers: {
+						Authorization: `Bearer ${token}`,
+					},
+				}
+			);
+
 			if (response.status === 204) {
 				alert("Company has been deleted Successfully");
 				window.location.reload();
@@ -55,8 +58,6 @@ export const Home = () => {
 		})();
 	}, [getAccessTokenSilently, user.sub]);
 
-	console.log(user.sub);
-
 	return (
 		<section
 			className={`flex ${
@@ -70,11 +71,17 @@ export const Home = () => {
 				</div>
 				<div className="flex items-start justify-center px-12">
 					<table className="w-full shadow-md text-md text-left">
-						<thead key="thead" className="text-xl border-b-2 border-green-800">
+						<thead className="text-xl border-b-2 border-green-800">
 							<tr>
 								{COLUMNS.map((column) => {
 									return (
-										<th scope="col" className="px-6 py-3">
+										<th
+											key={i18n.t(
+												`Shareholder.Company.Headers.${column.Header}`
+											)}
+											scope="col"
+											className="px-6 py-3"
+										>
 											{i18n.t(`Shareholder.Company.Headers.${column.Header}`)}
 										</th>
 									);
@@ -84,7 +91,7 @@ export const Home = () => {
 						<tbody className="font-Comfortaa" key="tbody">
 							{companies.map((company) => {
 								return (
-									<tr className="border-b">
+									<tr key={company._id} className="border-b">
 										<td className="px-6 py-4 font-medium whitespace-nowrap">
 											{company._id}
 										</td>

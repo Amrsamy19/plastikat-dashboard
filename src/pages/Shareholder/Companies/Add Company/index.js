@@ -17,13 +17,16 @@ export const AddCompany = () => {
 		const data = JSON.stringify({
 			name: name.current.value,
 			email: email.current.value,
-			district: district.current.value,
-			governorate: governorate.current.value,
+			contact: {
+				address: {
+					district: district.current.value,
+					governorate: governorate.current.value,
+				},
+			},
 		});
 		const token = await getAccessTokenSilently();
 		const response = await fetch(`http://164.92.248.132/api/companies`, {
 			method: "POST",
-			mode: "cors",
 			headers: {
 				Authorization: `Bearer ${token}`,
 				"Content-Type": "application/json",
@@ -31,8 +34,11 @@ export const AddCompany = () => {
 			body: data,
 		});
 
+		const json = await response.json();
 		if (response.ok) {
-			alert("Company has been added successfully");
+			alert(
+				`Company has been added successfully\n Company's Email: ${json.data.email}\n Company's Password: ${json.data.password}`
+			);
 			window.location.href = "http://localhost:3000/companies";
 		}
 	};

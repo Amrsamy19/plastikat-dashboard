@@ -14,7 +14,10 @@ const DelegateProfile = (props) => {
 				i18n.language === "ar" ? "font-Noto" : "font-Comfortaa"
 			}`}
 		>
-			<Navbar links={LINKS} data={JSON.parse(localStorage.getItem("company")).name} />
+			<Navbar
+				links={LINKS}
+				data={JSON.parse(localStorage.getItem("company")).name}
+			/>
 			<main>
 				<div className="w-fit m-10 p-4">
 					<h1 className="text-3xl">{i18n.t("Company.Profile.Title")}</h1>
@@ -24,28 +27,36 @@ const DelegateProfile = (props) => {
 						<p>
 							{i18n.t("Company.Delegates.DelegatePage.ID")}
 							{": "}
-							<strong className="font-Comfortaa text-green-800">{props.data._id}</strong>
+							<strong className="font-Comfortaa text-green-800">
+								{props.data._id}
+							</strong>
 						</p>
 					</div>
 					<div className="text-xl">
 						<p>
 							{i18n.t("Company.Delegates.DelegatePage.Name")}
 							{": "}
-							<strong className="font-Comfortaa text-green-800">{props.data.name}</strong>
+							<strong className="font-Comfortaa text-green-800">
+								{props.data.name}
+							</strong>
 						</p>
 					</div>
 					<div className="text-xl">
 						<p>
 							{i18n.t("Company.Delegates.DelegatePage.Email")}
 							{": "}
-							<strong className="font-Comfortaa text-green-800">{props.data.email}</strong>
+							<strong className="font-Comfortaa text-green-800">
+								{props.data.email}
+							</strong>
 						</p>
 					</div>
 					<div className="text-xl">
 						<p>
 							{i18n.t("Company.Delegates.DelegatePage.Gender")}
 							{": "}
-							<strong className="font-Comfortaa text-green-800">{props.data.gender}</strong>
+							<strong className="font-Comfortaa text-green-800">
+								{props.data.gender}
+							</strong>
 						</p>
 					</div>
 					<div className="text-xl">
@@ -57,14 +68,14 @@ const DelegateProfile = (props) => {
 							</strong>
 						</p>
 						<ul className="ml-12 list-disc">
-							<li className="m-2">
+							<li key={`Completed-${props.data.completed_offers_count}`} className="m-2">
 								{i18n.t("Company.Delegates.DelegatePage.Completed")}
 								{": "}
 								<strong className="font-Comfortaa text-green-800">
 									{props.data.completed_offers_count}
 								</strong>
 							</li>
-							<li className="m-2">
+							<li key={`Canceled-${props.data.canceled_offers_count}`} className="m-2">
 								{i18n.t("Company.Delegates.DelegatePage.Canceled")}
 								{": "}
 								<strong className="font-Comfortaa text-green-800">
@@ -86,7 +97,9 @@ const DelegateProfile = (props) => {
 						<p>
 							{i18n.t("Company.Delegates.DelegatePage.Rating")}
 							{": "}
-							<strong className="font-Comfortaa text-green-800">{props.data.rating}</strong>
+							<strong className="font-Comfortaa text-green-800">
+								{props.data.rating}
+							</strong>
 						</p>
 					</div>
 				</div>

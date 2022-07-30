@@ -8,6 +8,7 @@ import { LINKS } from "../../navlinks";
 export const Offer = () => {
 	const { user, getAccessTokenSilently } = useAuth0();
 	const [offer, setOffer] = useState(null);
+	const [delegates, setDelegates] = useState(null);
 	const { i18n } = useTranslation();
 	const URLParams = useParams();
 	const delegateID = useRef();
@@ -42,7 +43,44 @@ export const Offer = () => {
 		(async () => {
 			try {
 				const token = await getAccessTokenSilently();
-				const response = await fetch(
+
+				let delegatesResponse = await fetch(
+					`http://164.92.248.132/api/companies/${user.sub}/delegates`,
+					{
+						method: "GET",
+						headers: {
+							Authorization: `Bearer ${token}`,
+						},
+					}
+				);
+				if (delegatesResponse.ok) {
+					const delegatesJSON = await delegatesResponse.json();
+					if (
+						delegatesResponse.status === 200 ||
+						delegatesResponse.status === 304
+					) {
+						setDelegates(delegatesJSON.data);
+					}
+				} else {
+					delegatesResponse = await fetch(
+						`http://164.92.248.132/api/companies/${user.sub}/offers/${URLParams.offerID}/closestDelegates`,
+						{
+							method: "GET",
+							headers: {
+								Authorization: `Bearer ${token}`,
+							},
+						}
+					);
+					const delegatesJSON = await delegatesResponse.json();
+					if (
+						delegatesResponse.status === 200 ||
+						delegatesResponse.status === 304
+					) {
+						setDelegates(delegatesJSON.data);
+					}
+				}
+
+				const offerResponse = await fetch(
 					`http://164.92.248.132/api/companies/${user.sub}/offers/${URLParams.offerID}`,
 					{
 						method: "GET",
@@ -51,9 +89,9 @@ export const Offer = () => {
 						},
 					}
 				);
-				const json = await response.json();
-				if (response.status === 200 || response.status === 304) {
-					setOffer(json.data);
+				const offerJSON = await offerResponse.json();
+				if (offerResponse.status === 200 || offerResponse.status === 304) {
+					setOffer(offerJSON.data);
 				}
 			} catch (e) {
 				console.log(e);
@@ -62,6 +100,9 @@ export const Offer = () => {
 	}, [URLParams.offerID, getAccessTokenSilently, user.sub]);
 
 	if (!offer) return <div>Loading</div>;
+
+	let quantity = 0;
+	offer.items.forEach((item) => (quantity += item.quantity));
 
 	return (
 		<section
@@ -103,14 +144,10 @@ export const Offer = () => {
 							<p>
 								{i18n.t("Company.Home.OfferPage.Delegate.ID")}
 								{" : "}
-								<strong
-									className={`${
-										i18n.language === "ar" ? "font-Noto" : "font-Comfortaa"
-									}`}
-								>
+								<strong className="font-Comfortaa">
 									{offer.delegate === null
 										? i18n.t("Company.Home.OfferPage.Delegate.NotFound")
-										: offer.delegate.ID}
+										: offer.delegate._id}
 								</strong>
 							</p>
 						</div>
@@ -118,11 +155,7 @@ export const Offer = () => {
 							<p>
 								{i18n.t("Company.Home.OfferPage.Delegate.Name")}
 								{" : "}
-								<strong
-									className={`${
-										i18n.language === "ar" ? "font-Noto" : "font-Comfortaa"
-									}`}
-								>
+								<strong className="font-Comfortaa">
 									{offer.delegate === null
 										? i18n.t("Company.Home.OfferPage.Delegate.NotFound")
 										: offer.delegate.name}
@@ -134,6 +167,13 @@ export const Offer = () => {
 								{i18n.t("Company.Home.OfferPage.Points")}
 								{" : "}
 								<strong className="font-Comfortaa">{offer.points}</strong>
+							</p>
+						</div>
+						<div className="text-xl">
+							<p>
+								{i18n.t("Company.Home.OfferPage.ItemsQuantity")}
+								{" : "}
+								<strong className="font-Comfortaa">{quantity}</strong>
 							</p>
 						</div>
 						<div className="text-xl">
@@ -167,31 +207,36 @@ export const Offer = () => {
 							</div>
 						</div>
 						<div className="flex items-center text-xl">
-							<p>
-								{i18n.t("Company.Home.OfferPage.DelegateID")}
-								{" : "}
-							</p>
-							<div className="relative ml-8 focus-within:border-green-500">
-								<input
-									type="text"
-									name="delegateID"
-									value={offer.delegate !== null ? offer.delegate._id : ""}
-									ref={delegateID}
-									placeholder=" "
-									className="font-Comfortaa block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-green-600 peer"
-								/>
-								<label
-									htmlFor="delegateID"
-									className="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-green-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-								>
-									{i18n.t("Company.Home.OfferPage.EnterDelegateID")}
-								</label>
-							</div>
+							<label
+								htmlFor="delegateID"
+								className="text-md font-medium text-black"
+							>
+								{i18n.t("Company.Home.OfferPage.DelegateID")}:
+							</label>
+							<select
+								name="delegateID"
+								disabled={offer.status !== "COMPANY_ASSIGNED" ? true : false}
+								ref={delegateID}
+								className="font-Comfortaabg-transparent border border-green-500 text-gray-900 text-md rounded-lg focus:ring-green-700 focus:border-green-700 w-4/6 ml-8 p-2.5"
+								defaultValue={i18n.t("Company.Home.OfferPage.Choose")}
+								required
+							>
+								<option disabled>
+									{i18n.t("Company.Home.OfferPage.Choose")}
+								</option>
+								{delegates.map((delegate) => {
+									return (
+										<option className="font-Comfortaa" value={delegate._id}>
+											{delegate.name}
+										</option>
+									);
+								})}
+							</select>
 						</div>
 						<button
 							disabled={offer.status !== "COMPANY_ASSIGNED" ? true : false}
-							onClick={submitDelegate()}
-							className="bg-green-600 hover:bg-green-800 transition-all duration-300 text-white font-bold py-2 px-4 rounded-lg"
+							onClick={() => submitDelegate()}
+							className="bg-green-600 w-fit hover:bg-green-800 transition-all duration-300 text-white font-bold py-2 px-4 rounded-lg"
 						>
 							{i18n.t("Company.Home.OfferPage.Assign")}
 						</button>

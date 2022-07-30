@@ -34,9 +34,10 @@ export const AddDelegate = () => {
 				body: data,
 			}
 		);
-
+		const json = await response.json();
 		if (response.ok) {
-			window.location.href = "http://localhost:3000/company/delegates";
+			alert(`Delegate Email: ${json.data.email}\nDelegate Password: ${json.data.password}`)
+			window.location.href = "http://localhost:3000/delegates";
 		}
 	};
 
@@ -46,7 +47,10 @@ export const AddDelegate = () => {
 				i18n.language === "ar" ? "font-Noto" : "font-Comfortaa"
 			}`}
 		>
-			<Navbar links={LINKS} data={JSON.parse(localStorage.getItem("company")).name} />
+			<Navbar
+				links={LINKS}
+				data={JSON.parse(localStorage.getItem("company")).name}
+			/>
 			<main className="ml-64">
 				<div className="w-fit m-12 p-4">
 					<h1 className="text-3xl">
@@ -87,7 +91,7 @@ export const AddDelegate = () => {
 									name="gender"
 									ref={gender}
 									className="bg-transparent border border-green-500 text-gray-900 text-md rounded-lg focus:ring-green-700 focus:border-green-700 w-4/6 ml-8 p-2.5"
-									defaultValue={i18n.t("Delegates.AddDelegate.Choose")}
+									defaultValue={i18n.t("Company.Delegates.AddDelegate.Choose")}
 									required
 								>
 									<option disabled>

@@ -38,11 +38,11 @@ export const Table = (props) => {
 	return (
 		<>
 			<table className="w-full shadow-md text-md text-left">
-				<thead key="thead" className="text-xl border-b-2 border-green-800">
+				<thead className="text-xl border-b-2 border-green-800">
 					<tr>
 						{COLUMNS.map((column) => {
 							return (
-								<th scope="col" className="px-6 py-3">
+								<th key={column.Header} scope="col" className="px-6 py-3">
 									{i18n.t(`Company.Delegates.Headers.${column.Header}`)}
 								</th>
 							);
@@ -52,7 +52,7 @@ export const Table = (props) => {
 				<tbody className="font-Comfortaa" key="tbody">
 					{props.data.map((prop) => {
 						return (
-							<tr className="border-b">
+							<tr key={prop._id} className="border-b">
 								<td className="px-6 py-4 font-medium whitespace-nowrap">
 									{prop._id}
 								</td>

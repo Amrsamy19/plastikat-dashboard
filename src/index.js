@@ -34,7 +34,7 @@ import { App } from "./App";
 ReactDOM.render(
 	<Auth0Provider
 		domain="plastikat.eu.auth0.com"
-		clientId="ynmrMuZ4ZOFKiyCPaozkTs4U1rjylENb"
+		clientId="aCmW07HpL30ptqTh4EN83QKUff2QFSIA"
 		redirectUri={window.location.origin}
 		audience="plastikat-app-api"
 		scope="openid profile email"
